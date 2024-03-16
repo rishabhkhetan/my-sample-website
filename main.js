@@ -27,29 +27,32 @@ const pointlight = new THREE.PointLight(0xffffff)
 pointlight.position.set(5,5,5)
 scene.add(pointlight, ambientlight)
 
-const lighthelper = new THREE.PointLightHelper(pointlight)
-const gridhelper = new THREE.GridHelper(200,50);
-scene.add(lighthelper, gridhelper)
+// const lighthelper = new THREE.PointLightHelper(pointlight)
+// const gridhelper = new THREE.GridHelper(200,50);
+// scene.add(lighthelper, gridhelper)
 
 const controls = new OrbitControls(camera, renderer.domElement)
 
-function addStar(){
-  const geometry = new THREE.SphereGeometry(0.25,24,24);
-  const material = new THREE.MeshStandardMaterial({color: 0xffffff})
+let star;
 
-  const star = new THREE.Mesh(geometry, material);
+function addStar(){
+  const starTexture = new THREE.TextureLoader().load('star-texture.jpeg')
+  const geometry = new THREE.SphereGeometry(0.25,24,24);
+  const material = new THREE.MeshBasicMaterial({map: starTexture})
+
+  star = new THREE.Mesh(geometry, material);
 
   const [x,y,z] = Array(3).fill().map(()=> THREE.MathUtils.randFloatSpread(100))
   star.position.set(x,y,z)
   scene.add(star)
 }
 
-Array(200).fill().forEach(addStar)
+Array(150).fill().forEach(addStar)
 
-const spaceTexture = new THREE.TextureLoader().load('space.jpg')
+const spaceTexture = new THREE.TextureLoader().load('newbackground.jpg')
 scene.background = spaceTexture;
 
-const myTexture = new THREE.TextureLoader().load('profilepic.jpg')
+const myTexture = new THREE.TextureLoader().load('myimg.jpg')
 
 const myself = new THREE.Mesh(
   new THREE.BoxGeometry(3,3,3),
@@ -98,6 +101,10 @@ function animate(){
     torus.rotation.x +=0.01;
     torus.rotation.y +=0.005;
     torus.rotation.z +=0.01;
+
+    star.rotation.x +=0.01;
+    star.rotation.y +=0.005;
+    star.rotation.z +=0.01;
 
     controls.update()
 

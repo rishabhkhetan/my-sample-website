@@ -65,3 +65,11 @@ blockquote{
 .left {
   grid-column: 6 / 12;
 }
+
+#intro{
+  font-size: smaller;
+}
+
+.projs{
+  margin-bottom:0%;
+}
